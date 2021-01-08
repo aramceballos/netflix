@@ -27,6 +27,7 @@ const Container = styled.div<IContainerProps>`
   );
   background-color: ${({ dark }) => dark && "rgba(20, 20, 20)"};
   transition: 0.4s ease background-color;
+  z-index: 9999;
 `
 
 const StyledLink = styled(Link)`
