@@ -19,15 +19,15 @@ interface IMovie {
 }
 
 const Container = styled.div`
-  margin-top: -104px;
+  margin-top: -40px;
   z-index: 2;
   position: relative;
-  padding-left: 40px;
 `
 
 const ListTitle = styled.p`
   font-size: 13px;
   margin: 0;
+  padding-left: 15px;
 `
 
 const Ul = styled.ul`
@@ -36,10 +36,11 @@ const Ul = styled.ul`
   display: flex;
   padding: 0;
   margin: 7px 0;
+  padding-left: 15px;
 `
 
 const ImageItem = styled.img`
-  max-width: 200px;
+  max-width: 170px;
   border-radius: 4px;
   margin-right: 4px;
 `

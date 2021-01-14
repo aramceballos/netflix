@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components"
+import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyles = createGlobalStyle`
     *{
@@ -18,6 +18,7 @@ const GlobalStyles = createGlobalStyle`
         color: #fff;
         font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
         height: 100vh;
+        width: 100vw
     }
 
     a {
