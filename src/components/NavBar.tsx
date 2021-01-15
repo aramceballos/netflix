@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Search } from '@styled-icons/heroicons-outline'
+import { Close } from '@styled-icons/ionicons-outline/Close'
 import { Gift } from '@styled-icons/boxicons-regular'
 import { Bell } from '@styled-icons/boxicons-solid'
 import { ArrowDropDown } from '@styled-icons/material'
 
-import { fadeIn } from '../styles/animations'
+import { fadeIn, widthAnimation } from '../styles/animations'
 
-import logo from '../assets/Netflix_Logo_PMS.png'
+import logo from '../assets/Netflix_Logo_RGB.png'
 
 interface IContainerProps {
   dark?: boolean
@@ -16,6 +17,10 @@ interface IContainerProps {
 
 interface INavElementProps {
   hideMargin?: boolean
+}
+
+interface ISearchIcon {
+  isInInput?: boolean
 }
 
 const Container = styled.div<IContainerProps>`
@@ -178,6 +183,7 @@ const IconsContainer = styled.div`
 `
 
 const NavElement = styled.div<INavElementProps>`
+  position: relative;
   margin-right: ${({ hideMargin }) => (hideMargin ? '0' : '20px')};
 
   @media screen and (min-width: 925px) {
@@ -185,9 +191,21 @@ const NavElement = styled.div<INavElementProps>`
   }
 `
 
-const SearchIcon = styled(Search)`
+const SearchIcon = styled(Search)<ISearchIcon>`
   width: 12.5px;
   cursor: pointer;
+
+  ${({ isInInput }) =>
+    isInInput &&
+    css`
+      position: absolute;
+      left: 7px;
+      top: 9px;
+    `}
+
+  @media screen and (max-width: 400px) {
+    display: none;
+  }
 
   @media screen and (min-width: 925px) {
     width: 16px;
@@ -200,6 +218,30 @@ const SearchIcon = styled(Search)`
   @media screen and (min-width: 1330px) {
     width: 24px;
   }
+`
+
+const SearchContainer = styled.div`
+  height: 34px;
+  width: 260px;
+  position: absolute;
+  top: -16px;
+  right: 0;
+  ${widthAnimation()}
+`
+
+const SearchInput = styled.input`
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  border: solid 1px rgba(255, 255, 255, 0.85);
+  color: #fff;
+`
+
+const CloseIcon = styled(Close)`
+  position: absolute;
+  width: 25px;
+  top: 4px;
+  right: 2px;
 `
 
 const GiftIcon = styled(Gift)`
@@ -265,6 +307,7 @@ const NavBar = () => {
   const [isNavBarCompacted, setIsNavBarCompacted] = useState(
     window.innerWidth < 850
   )
+  const [showSearchInput, setShowSearchInput] = useState(false)
 
   useEffect(() => {
     const onResize = () => {
@@ -404,7 +447,20 @@ const NavBar = () => {
       )}
       <IconsContainer>
         <NavElement>
-          <SearchIcon />
+          {showSearchInput ? (
+            <SearchContainer>
+              <SearchInput
+                onBlur={() => setShowSearchInput(false)}
+                placeholder="Titles, people, genres"
+                type="text"
+                autoFocus
+              />
+              <SearchIcon isInInput />
+              <CloseIcon onClick={() => setShowSearchInput(false)} />
+            </SearchContainer>
+          ) : (
+            <SearchIcon onClick={() => setShowSearchInput(true)} />
+          )}
         </NavElement>
         <NavElement>
           <GiftIcon />
@@ -415,7 +471,7 @@ const NavBar = () => {
         <NavElement hideMargin>
           <AccountMenuItem>
             <ProfileIcon
-              src="https://occ-0-4406-33.1.nflxso.net/dnm/api/v6/0RO1pLmU93-gdXvuxd_iYjzPqkc/AAAABb668VXA2FuedO7QoMEVfJNZVdKb5wsfPO-vhAlHnIxV6myhirfbSzBt3xDfER3ulqWjNoS8xqSp-RynnH3p5Kc.png?r=f3f"
+              src="https://occ-0-49-114.1.nflxso.net/dnm/api/v6/0RO1pLmU93-gdXvuxd_iYjzPqkc/AAAAFFNpvUWEcToEOcf84YIAkDopoPkujSEkD5mQdRRU_8osXVdQAQJlzhBx_oRUl2DBJvzyHE3zUSRPEFjepJlaD5qeew.png?r=a41"
               alt="profile-icon"
             />
             <ArrowDropDownIcon

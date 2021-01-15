@@ -19,13 +19,13 @@ interface IMovie {
 }
 
 const Container = styled.div`
-  margin-top: -40px;
+  top: -30px;
   z-index: 2;
   position: relative;
 `
 
 const ListTitle = styled.p`
-  font-size: 13px;
+  font-size: 12px;
   margin: 0;
   padding-left: 15px;
 `
@@ -45,18 +45,36 @@ const ImageItem = styled.img`
   margin-right: 4px;
 `
 
-const ListOfMovies = () => {
+const ListOfMovies = ({ type }: { type: string }) => {
   const [movies, setMovies] = useState([])
 
   useEffect(() => {
     getMovies()
   }, [])
 
+  const BASE_URL = 'https://api.themoviedb.org/3'
+
+  let endpoint = ''
+  let title = ''
+
+  switch (type) {
+    case 'discover':
+      title = 'Discover Movies'
+      endpoint = '/discover/movie?api_key=55b7d17bbf2598297dd0d3af358dca8c'
+      break
+
+    case 'trending':
+      title = 'Trending'
+      endpoint = '/trending/all/day?api_key=55b7d17bbf2598297dd0d3af358dca8c'
+      break
+
+    default:
+      break
+  }
+
   const getMovies = async () => {
     try {
-      const res = await fetch(
-        'https://api.themoviedb.org/3/discover/movie?api_key=55b7d17bbf2598297dd0d3af358dca8c'
-      )
+      const res = await fetch(`${BASE_URL}${endpoint}`)
       const data = await res.json()
 
       setMovies(data.results)
@@ -67,7 +85,7 @@ const ListOfMovies = () => {
 
   return (
     <Container>
-      <ListTitle>Discover Movies</ListTitle>
+      <ListTitle>{title}</ListTitle>
       <Ul>
         {movies.map((movie: IMovie) => {
           if (!movie.backdrop_path) {

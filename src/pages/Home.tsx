@@ -31,7 +31,11 @@ const Home = () => {
         />
       </ImageContainer>
       <Shadow />
+      <ListOfMovies type="discover" />
+      <ListOfMovies type="trending" />
+      {/* <ListOfMovies />
       <ListOfMovies />
+      <ListOfMovies /> */}
     </div>
   )
 }
