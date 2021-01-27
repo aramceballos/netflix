@@ -1,6 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import ListOfMovies from '../components/ListOfMovies'
+
+interface IMovie {
+  poster_path?: string
+  adult: boolean
+  overview: string
+  release_date: string
+  genre_ids: number[]
+  id: number
+  original_title: string
+  original_language: string
+  title: string
+  backdrop_path?: string
+  popularity: number
+  vote_count: number
+  video: boolean
+  vote_average: number
+}
 
 const Img = styled.img`
   width: 100vw;
@@ -22,17 +39,47 @@ const Shadow = styled.div`
 `
 
 const Home = () => {
+  const [movies, setMovies] = useState<IMovie[]>([])
+
+  useEffect(() => {
+    getMovies()
+  }, [])
+
+  const getMovies = async () => {
+    try {
+      const res = await fetch(
+        'https://api.themoviedb.org/3/discover/movie?api_key=55b7d17bbf2598297dd0d3af358dca8c'
+      )
+      const data = await res.json()
+
+      setMovies(data.results)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div>
       <ImageContainer>
         <Img
-          src="https://occ-0-4406-33.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABTDv9qj-JuKjRQN1RDhdh0mLuivsozxX4nD9seSZl-7YAjzYbysssmdsBEmqFNSkN-eZf5t_5J7gLXbFWI2yKRp0znxM.webp?r=c36"
+          src={`https://image.tmdb.org/t/p/original${
+            Math.floor(Math.random() * Math.floor(movies.length - 1)) > 0
+              ? movies[
+                  Math.floor(Math.random() * Math.floor(movies.length - 1))
+                ]?.backdrop_path
+              : ''
+          }`}
           alt="cover"
+          loading="lazy"
         />
       </ImageContainer>
       <Shadow />
-      <ListOfMovies type="discover" />
-      <ListOfMovies type="trending" />
+      <ListOfMovies movies={movies} />
+      <ListOfMovies movies={movies} />
+      <ListOfMovies movies={movies} />
+      <ListOfMovies movies={movies} />
+      <ListOfMovies movies={movies} />
+      <ListOfMovies movies={movies} />
       {/* <ListOfMovies />
       <ListOfMovies />
       <ListOfMovies /> */}
