@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/aramceballos/netflix#readme",
   "dependencies": {
+    "@material-ui/core": "4.11.3",
     "@styled-icons/boxicons-regular": "10.18.0",
     "@styled-icons/boxicons-solid": "10.18.0",
     "@styled-icons/heroicons-outline": "10.19.0",

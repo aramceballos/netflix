@@ -8,19 +8,19 @@ import { ArrowDropDown } from '@styled-icons/material'
 
 import { fadeIn, widthAnimation } from '../../styles/animations'
 
-type IContainerProps = {
+type ContainerProps = {
   dark?: boolean
 }
 
-type INavElementProps = {
+type NavElementProps = {
   hideMargin?: boolean
 }
 
-type ISearchIcon = {
+type SearchIconProps = {
   isInInput?: boolean
 }
 
-export const Container = styled.div<IContainerProps>`
+export const Container = styled.div<ContainerProps>`
   height: 40px;
   display: flex;
   align-items: center;
@@ -35,7 +35,7 @@ export const Container = styled.div<IContainerProps>`
   );
   background-color: ${({ dark }) => dark && 'rgba(20, 20, 20)'};
   transition: 0.4s ease background-color;
-  z-index: 9999;
+  z-index: 99;
 
   @media screen and (min-width: 925px) {
     height: 68px;
@@ -179,7 +179,7 @@ export const IconsContainer = styled.div`
   height: 100%;
 `
 
-export const NavElement = styled.div<INavElementProps>`
+export const NavElement = styled.div<NavElementProps>`
   position: relative;
   margin-right: ${({ hideMargin }) => (hideMargin ? '0' : '20px')};
 
@@ -188,7 +188,7 @@ export const NavElement = styled.div<INavElementProps>`
   }
 `
 
-export const SearchIcon = styled(Search)<ISearchIcon>`
+export const SearchIcon = styled(Search)<SearchIconProps>`
   width: 12.5px;
   cursor: pointer;
 
