@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import Home from './pages/Home'
 import Layout from './components/Layout'
@@ -11,9 +11,9 @@ const App = () => {
       <GlobalStyles />
       <BrowserRouter>
         <Layout>
-          <Switch>
-            <Route exact path="/" component={Home} />
-          </Switch>
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
         </Layout>
       </BrowserRouter>
     </>

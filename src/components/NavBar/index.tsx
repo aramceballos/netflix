@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { CSSProperties, useEffect, useState } from 'react'
 
 import {
   Container,
@@ -63,6 +63,10 @@ const NavBar = () => {
     setShowNavBarMenu(!showNavBarMenu)
   }
 
+  let activeStyle: CSSProperties = {
+    fontWeight: 500,
+  }
+
   return (
     <Container dark={showDark}>
       <StyledLink to="/">
@@ -80,14 +84,16 @@ const NavBar = () => {
           <TopBar />
           <Menu>
             <MenuItem>
-              <NavLinkStyled exact activeStyle={{ fontWeight: 500 }} to="/">
+              <NavLinkStyled
+                style={({ isActive }) => (isActive ? activeStyle : {})}
+                to="/"
+              >
                 Home
               </NavLinkStyled>
             </MenuItem>
             <MenuItem>
               <NavLinkStyled
-                exact
-                activeStyle={{ fontWeight: 500 }}
+                style={({ isActive }) => (isActive ? activeStyle : {})}
                 to="/tv-shows"
               >
                 TV Shows
@@ -95,8 +101,7 @@ const NavBar = () => {
             </MenuItem>
             <MenuItem>
               <NavLinkStyled
-                exact
-                activeStyle={{ fontWeight: 500 }}
+                style={({ isActive }) => (isActive ? activeStyle : {})}
                 to="/movies"
               >
                 Movies
@@ -104,8 +109,7 @@ const NavBar = () => {
             </MenuItem>
             <MenuItem>
               <NavLinkStyled
-                exact
-                activeStyle={{ fontWeight: 500 }}
+                style={({ isActive }) => (isActive ? activeStyle : {})}
                 to="/latest"
               >
                 News & Popular
@@ -113,8 +117,7 @@ const NavBar = () => {
             </MenuItem>
             <MenuItem>
               <NavLinkStyled
-                exact
-                activeStyle={{ fontWeight: 500 }}
+                style={({ isActive }) => (isActive ? activeStyle : {})}
                 to="/my-list"
               >
                 My List
@@ -127,8 +130,7 @@ const NavBar = () => {
         <MenuDesktop>
           <MenuItemDesktop>
             <NavLinkDesktopStyled
-              exact
-              activeStyle={{ fontWeight: 500 }}
+              style={({ isActive }) => (isActive ? activeStyle : {})}
               to="/"
             >
               Home
@@ -136,8 +138,7 @@ const NavBar = () => {
           </MenuItemDesktop>
           <MenuItemDesktop>
             <NavLinkDesktopStyled
-              exact
-              activeStyle={{ fontWeight: 500 }}
+              style={({ isActive }) => (isActive ? activeStyle : {})}
               to="/tv-shows"
             >
               TV Shows
@@ -145,8 +146,7 @@ const NavBar = () => {
           </MenuItemDesktop>
           <MenuItemDesktop>
             <NavLinkDesktopStyled
-              exact
-              activeStyle={{ fontWeight: 500 }}
+              style={({ isActive }) => (isActive ? activeStyle : {})}
               to="/movies"
             >
               Movies
@@ -154,8 +154,7 @@ const NavBar = () => {
           </MenuItemDesktop>
           <MenuItemDesktop>
             <NavLinkDesktopStyled
-              exact
-              activeStyle={{ fontWeight: 500 }}
+              style={({ isActive }) => (isActive ? activeStyle : {})}
               to="/latest"
             >
               News & Popular
@@ -163,8 +162,7 @@ const NavBar = () => {
           </MenuItemDesktop>
           <MenuItemDesktop>
             <NavLinkDesktopStyled
-              exact
-              activeStyle={{ fontWeight: 500 }}
+              style={({ isActive }) => (isActive ? activeStyle : {})}
               to="/my-list"
             >
               My List
