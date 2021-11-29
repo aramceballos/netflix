@@ -16,12 +16,25 @@ const InfoContainer = styled.div`
   @media screen and (min-width: 768px) {
     top: 100px;
   }
+
+  @media screen and (min-width: 1200px) {
+    top: 250px;
+  }
+
+  @media screen and (min-width: 1920px) {
+    top: 500px;
+  }
 `
 
 const Title = styled.h2`
-  font-size: 18px;
-  @media screen and (min-width: 768px) {
+  font-size: 28px;
+
+  @media screen and (min-width: 480px) {
     font-size: 38px;
+  }
+
+  @media screen and (min-width: 1200px) {
+    font-size: 48px;
   }
 `
 
@@ -41,10 +54,21 @@ const PlayButton = styled.button`
   border: none;
   display: flex;
   align-items: center;
-  width: 60px;
-  height: 22px;
-  margin-right: 5px;
+  width: 65px;
+  height: 27px;
+  margin-right: 7.5px;
   cursor: pointer;
+  color: #000;
+
+  @media screen and (min-width: 768px) {
+    width: 85px;
+    height: 32px;
+  }
+
+  @media screen and (min-width: 1200px) {
+    width: 110px;
+    height: 40px;
+  }
 `
 
 const InfoButton = styled.button`
@@ -53,12 +77,22 @@ const InfoButton = styled.button`
   border: none;
   display: flex;
   align-items: center;
-  width: 80px;
-  height: 22px;
+  width: 90px;
+  height: 27px;
   margin-right: 5px;
-  justify-content: space-around;
+  justify-content: space-evenly;
   padding: 5px;
   cursor: pointer;
+
+  @media screen and (min-width: 768px) {
+    width: 115px;
+    height: 32px;
+  }
+
+  @media screen and (min-width: 1200px) {
+    width: 140px;
+    height: 40px;
+  }
 `
 
 const InfoIcon = styled(InfoCircle)`
@@ -67,12 +101,28 @@ const InfoIcon = styled(InfoCircle)`
 `
 
 const ButtonText = styled.span`
-  font-size: 10px;
+  font-size: 11px;
+
+  @media screen and (min-width: 768px) {
+    font-size: 13px;
+  }
+
+  @media screen and (min-width: 768px) {
+    font-size: 16px;
+  }
 `
 
 const ButtonInfoText = styled.span`
-  font-size: 10px;
+  font-size: 11px;
   color: #fff;
+
+  @media screen and (min-width: 768px) {
+    font-size: 13px;
+  }
+
+  @media screen and (min-width: 768px) {
+    font-size: 16px;
+  }
 `
 
 const Shadow = styled.div`
@@ -86,12 +136,47 @@ const Shadow = styled.div`
   background-color: #141414;
 `
 
+enum ScreenSize {
+  Mobile = 480,
+  Tablet = 768,
+  Desktop = 1200,
+}
+
 const Home = () => {
   const [movies, setMovies] = useState<IMovie[]>([])
   const [randomMovie, setRandomMovie] = useState<IMovie>()
+  const [size, setSize] = useState<ScreenSize>()
 
   useEffect(() => {
     getMovies()
+  }, [])
+
+  useEffect(() => {
+    if (window.innerWidth <= ScreenSize.Mobile) {
+      setSize(ScreenSize.Mobile)
+    } else if (window.innerWidth <= ScreenSize.Tablet) {
+      setSize(ScreenSize.Tablet)
+    } else {
+      setSize(ScreenSize.Desktop)
+    }
+  }, [])
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= ScreenSize.Mobile) {
+        setSize(ScreenSize.Mobile)
+      } else if (window.innerWidth <= ScreenSize.Tablet) {
+        setSize(ScreenSize.Tablet)
+      } else {
+        setSize(ScreenSize.Desktop)
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
   }, [])
 
   useEffect(() => {
@@ -130,11 +215,27 @@ const Home = () => {
           <Title>{randomMovie?.title}</Title>
           <ButtonsContainer>
             <PlayButton>
-              <Play width={20} />
+              <Play
+                width={
+                  size === ScreenSize.Mobile
+                    ? 25
+                    : size === ScreenSize.Tablet
+                    ? 30
+                    : 40
+                }
+              />
               <ButtonText>Play</ButtonText>
             </PlayButton>
             <InfoButton>
-              <InfoIcon width={14} />
+              <InfoIcon
+                width={
+                  size === ScreenSize.Mobile
+                    ? 19
+                    : size === ScreenSize.Tablet
+                    ? 19
+                    : 30
+                }
+              />
               <ButtonInfoText>More Info</ButtonInfoText>
             </InfoButton>
           </ButtonsContainer>
