@@ -37,8 +37,17 @@ export const Container = styled.div<ContainerProps>`
   transition: 0.4s ease background-color;
   z-index: 99;
 
-  @media screen and (min-width: 925px) {
+  @media screen and (min-width: 768px) {
+    padding: 0 20px;
+  }
+
+  @media screen and (min-width: 1200px) {
     height: 68px;
+    padding: 0 30px;
+  }
+
+  @media screen and (min-width: 1920px) {
+    padding: 0 40px;
   }
 `
 
@@ -57,15 +66,10 @@ export const Img = styled.img`
 
   @media screen and (min-width: 768px) {
     height: 35px;
-    margin-left: 20px;
   }
 
-  @media screen and (min-width: 925px) {
+  @media screen and (min-width: 1200px) {
     height: 49px;
-  }
-
-  @media screen and (min-width: 1100px) {
-    margin-left: 35px;
   }
 `
 
@@ -75,7 +79,7 @@ export const MenuText = styled.p`
 
   @media screen and (min-width: 768px) {
     margin-left: 10px;
-    font-size: 12px;
+    font-size: 9px;
   }
 `
 
@@ -159,10 +163,6 @@ export const NavLinkStyled = styled(NavLink)`
 
 export const NavLinkDesktopStyled = styled(NavLink)`
   font-size: 9px;
-
-  @media screen and (min-width: 925px) {
-    font-size: 10px;
-  }
 
   @media screen and (min-width: 1150px) {
     font-size: 13px;

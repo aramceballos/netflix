@@ -4,24 +4,32 @@ import { Play, InfoCircle } from '@styled-icons/boxicons-regular'
 import ListOfMovies from '../components/ListOfMovies'
 
 const ImageContainer = styled.div`
-  position: relative;
-  padding-top: 56.25%;
+  /* position: relative;
+  padding-top: 56.25%; */
 `
 
 const InfoContainer = styled.div`
   position: absolute;
-  top: 56px;
+  top: 45px;
   padding-left: 15px;
 
   @media screen and (min-width: 768px) {
-    top: 100px;
+    top: 140px;
+    padding-left: 30px;
+  }
+
+  @media screen and (min-width: 925px) {
+    top: 180px;
+    padding-left: 35px;
   }
 
   @media screen and (min-width: 1200px) {
+    padding-left: 40px;
     top: 250px;
   }
 
   @media screen and (min-width: 1920px) {
+    padding-left: 50px;
     top: 500px;
   }
 `
@@ -40,8 +48,11 @@ const Title = styled.h2`
 
 const Img = styled.img`
   width: 100vw;
-  position: absolute;
   top: 0;
+  object-fit: cover;
+  height: calc(100vw * 0.5625);
+  opacity: 0;
+  transition: all 0.3s ease;
 `
 
 const ButtonsContainer = styled.div`
@@ -69,6 +80,11 @@ const PlayButton = styled.button`
     width: 110px;
     height: 40px;
   }
+
+  @media screen and (min-width: 1920px) {
+    width: 140px;
+    height: 55px;
+  }
 `
 
 const InfoButton = styled.button`
@@ -93,6 +109,11 @@ const InfoButton = styled.button`
     width: 140px;
     height: 40px;
   }
+
+  @media screen and (min-width: 1920px) {
+    width: 200px;
+    height: 55px;
+  }
 `
 
 const InfoIcon = styled(InfoCircle)`
@@ -100,15 +121,19 @@ const InfoIcon = styled(InfoCircle)`
   margin-right: 2px;
 `
 
-const ButtonText = styled.span`
+const ButtonPlayText = styled.span`
   font-size: 11px;
 
   @media screen and (min-width: 768px) {
     font-size: 13px;
   }
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 1200px) {
     font-size: 16px;
+  }
+
+  @media screen and (min-width: 1920px) {
+    font-size: 22px;
   }
 `
 
@@ -120,8 +145,12 @@ const ButtonInfoText = styled.span`
     font-size: 13px;
   }
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 1200px) {
     font-size: 16px;
+  }
+
+  @media screen and (min-width: 1920px) {
+    font-size: 22px;
   }
 `
 
@@ -136,10 +165,45 @@ const Shadow = styled.div`
   background-color: #141414;
 `
 
+const ListsContainer = styled.div`
+  top: -40px;
+  & > div > * {
+    padding-left: 15px;
+  }
+  position: relative;
+
+  @media screen and (min-width: 768px) {
+    top: -60px;
+    & > div > * {
+      padding-left: 30px;
+    }
+  }
+
+  @media screen and (min-width: 925px) {
+    & > div > * {
+      padding-left: 35px;
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    & > div > * {
+      padding-left: 40px;
+    }
+  }
+
+  @media screen and (min-width: 1920px) {
+    top: -90px;
+    & > div > * {
+      padding-left: 50px;
+    }
+  }
+`
+
 enum ScreenSize {
   Mobile = 480,
   Tablet = 768,
-  Desktop = 1200,
+  Laptop = 1200,
+  Desktop = 1920,
 }
 
 const Home = () => {
@@ -156,6 +220,8 @@ const Home = () => {
       setSize(ScreenSize.Mobile)
     } else if (window.innerWidth <= ScreenSize.Tablet) {
       setSize(ScreenSize.Tablet)
+    } else if (window.innerWidth <= ScreenSize.Desktop) {
+      setSize(ScreenSize.Laptop)
     } else {
       setSize(ScreenSize.Desktop)
     }
@@ -167,6 +233,8 @@ const Home = () => {
         setSize(ScreenSize.Mobile)
       } else if (window.innerWidth <= ScreenSize.Tablet) {
         setSize(ScreenSize.Tablet)
+      } else if (window.innerWidth <= ScreenSize.Desktop) {
+        setSize(ScreenSize.Laptop)
       } else {
         setSize(ScreenSize.Desktop)
       }
@@ -210,6 +278,10 @@ const Home = () => {
           src={`https://image.tmdb.org/t/p/original${randomMovie?.backdrop_path}`}
           alt="cover"
           loading="lazy"
+          onLoad={(ev) => {
+            console.log('loaded')
+            console.log((ev.currentTarget.style.opacity = '1'))
+          }}
         />
         <InfoContainer>
           <Title>{randomMovie?.title}</Title>
@@ -221,10 +293,14 @@ const Home = () => {
                     ? 25
                     : size === ScreenSize.Tablet
                     ? 30
-                    : 40
+                    : size === ScreenSize.Laptop
+                    ? 40
+                    : size === ScreenSize.Desktop
+                    ? 50
+                    : 35
                 }
               />
-              <ButtonText>Play</ButtonText>
+              <ButtonPlayText>Play</ButtonPlayText>
             </PlayButton>
             <InfoButton>
               <InfoIcon
@@ -233,7 +309,11 @@ const Home = () => {
                     ? 19
                     : size === ScreenSize.Tablet
                     ? 19
-                    : 30
+                    : size === ScreenSize.Laptop
+                    ? 27
+                    : size === ScreenSize.Desktop
+                    ? 35
+                    : 19
                 }
               />
               <ButtonInfoText>More Info</ButtonInfoText>
@@ -242,12 +322,14 @@ const Home = () => {
         </InfoContainer>
       </ImageContainer>
       <Shadow />
-      <ListOfMovies movies={movies} />
-      <ListOfMovies movies={movies} />
-      <ListOfMovies movies={movies} />
-      <ListOfMovies movies={movies} />
-      <ListOfMovies movies={movies} />
-      <ListOfMovies movies={movies} />
+      <ListsContainer>
+        <ListOfMovies movies={movies} />
+        <ListOfMovies movies={movies} />
+        <ListOfMovies movies={movies} />
+        <ListOfMovies movies={movies} />
+        <ListOfMovies movies={movies} />
+        <ListOfMovies movies={movies} />
+      </ListsContainer>
     </div>
   )
 }
