@@ -4,8 +4,8 @@ import { Play, InfoCircle } from '@styled-icons/boxicons-regular'
 import ListOfMovies from '../components/ListOfMovies'
 
 const ImageContainer = styled.div`
-  /* position: relative;
-  padding-top: 56.25%; */
+  width: 100vw;
+  height: calc(100vw * 0.5625);
 `
 
 const InfoContainer = styled.div`
