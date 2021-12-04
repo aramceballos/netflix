@@ -52,7 +52,7 @@ const Img = styled.img`
   object-fit: cover;
   height: calc(100vw * 0.5625);
   opacity: 0;
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
 `
 
 const ButtonsContainer = styled.div`
@@ -279,8 +279,7 @@ const Home = () => {
           alt="cover"
           loading="lazy"
           onLoad={(ev) => {
-            console.log('loaded')
-            console.log((ev.currentTarget.style.opacity = '1'))
+            ev.currentTarget.style.opacity = '1'
           }}
         />
         <InfoContainer>
