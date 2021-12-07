@@ -6,6 +6,17 @@ import ListOfMovies from '../components/ListOfMovies'
 const ImageContainer = styled.div`
   width: 100vw;
   height: calc(100vw * 0.5625);
+  max-height: 90vh;
+`
+
+const Img = styled.img`
+  width: 100vw;
+  top: 0;
+  object-fit: cover;
+  height: calc(100vw * 0.5625);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  max-height: 90vh;
 `
 
 const InfoContainer = styled.div`
@@ -44,15 +55,6 @@ const Title = styled.h2`
   @media screen and (min-width: 1200px) {
     font-size: 48px;
   }
-`
-
-const Img = styled.img`
-  width: 100vw;
-  top: 0;
-  object-fit: cover;
-  height: calc(100vw * 0.5625);
-  opacity: 0;
-  transition: all 0.5s ease;
 `
 
 const ButtonsContainer = styled.div`
@@ -157,8 +159,8 @@ const ButtonInfoText = styled.span`
 const Shadow = styled.div`
   width: 100%;
   -webkit-appearance: none;
-  box-shadow: 0px 0px 20px 20px #141414;
-  -webkit-box-shadow: 0px 0px 20px 20px #141414;
+  box-shadow: 0px 0px 20px 30px #141414;
+  -webkit-box-shadow: 0px 0px 20px 30px #141414;
   position: relative;
   z-index: 2;
   height: 1px;
