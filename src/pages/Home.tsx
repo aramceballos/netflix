@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Play, InfoCircle } from '@styled-icons/boxicons-regular'
 import ListOfMovies from '../components/ListOfMovies'
@@ -118,9 +118,34 @@ const InfoButton = styled.button`
   }
 `
 
+const PlayIcon = styled(Play)`
+  width: 25px;
+
+  @media screen and (min-width: 768px) {
+    width: 30px;
+  }
+
+  @media screen and (min-width: 1200px) {
+    width: 40px;
+  }
+
+  @media screen and (min-width: 1920px) {
+    width: 50px;
+  }
+`
+
 const InfoIcon = styled(InfoCircle)`
   color: #fff;
   margin-right: 2px;
+  width: 19px;
+
+  @media screen and (min-width: 1200px) {
+    width: 27px;
+  }
+
+  @media screen and (min-width: 1920px) {
+    width: 35px;
+  }
 `
 
 const ButtonPlayText = styled.span`
@@ -201,138 +226,103 @@ const ListsContainer = styled.div`
   }
 `
 
-enum ScreenSize {
-  Mobile = 480,
-  Tablet = 768,
-  Laptop = 1200,
-  Desktop = 1920,
+type Props = {}
+
+type State = {
+  movies: IMovie[]
+  randomMovie: IMovie
 }
 
-const Home = () => {
-  const [movies, setMovies] = useState<IMovie[]>([])
-  const [randomMovie, setRandomMovie] = useState<IMovie>()
-  const [size, setSize] = useState<ScreenSize>()
-
-  useEffect(() => {
-    getMovies()
-  }, [])
-
-  useEffect(() => {
-    if (window.innerWidth <= ScreenSize.Mobile) {
-      setSize(ScreenSize.Mobile)
-    } else if (window.innerWidth <= ScreenSize.Tablet) {
-      setSize(ScreenSize.Tablet)
-    } else if (window.innerWidth <= ScreenSize.Desktop) {
-      setSize(ScreenSize.Laptop)
-    } else {
-      setSize(ScreenSize.Desktop)
+class Home extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props)
+    this.state = {
+      movies: [],
+      randomMovie: {
+        adult: false,
+        backdrop_path: '',
+        genre_ids: [],
+        id: 0,
+        original_language: '',
+        original_title: '',
+        overview: '',
+        popularity: 0,
+        poster_path: '',
+        release_date: '',
+        title: '',
+        video: false,
+        vote_average: 0,
+        vote_count: 0,
+      },
     }
-  }, [])
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= ScreenSize.Mobile) {
-        setSize(ScreenSize.Mobile)
-      } else if (window.innerWidth <= ScreenSize.Tablet) {
-        setSize(ScreenSize.Tablet)
-      } else if (window.innerWidth <= ScreenSize.Desktop) {
-        setSize(ScreenSize.Laptop)
-      } else {
-        setSize(ScreenSize.Desktop)
-      }
-    }
-
-    window.addEventListener('resize', handleResize)
-
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
-
-  useEffect(() => {
-    getRandomMovie()
-  }, [movies])
-
-  const getRandomMovie = () => {
-    Math.floor(Math.random() * Math.floor(movies.length - 1)) > 0 &&
-      setRandomMovie(
-        movies[Math.floor(Math.random() * Math.floor(movies.length - 1))]
-      )
   }
 
-  const getMovies = async () => {
+  async getMovies() {
     try {
       const res = await fetch(
         'https://api.themoviedb.org/3/discover/movie?api_key=55b7d17bbf2598297dd0d3af358dca8c'
       )
       const data = await res.json()
 
-      setMovies(data.results)
+      this.setState({
+        movies: data.results,
+      })
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 
-  return (
-    <div>
-      <ImageContainer>
-        <Img
-          src={`https://image.tmdb.org/t/p/original${randomMovie?.backdrop_path}`}
-          alt="cover"
-          loading="lazy"
-          onLoad={(ev) => {
-            ev.currentTarget.style.opacity = '1'
-          }}
-        />
-        <InfoContainer>
-          <Title>{randomMovie?.title}</Title>
-          <ButtonsContainer>
-            <PlayButton>
-              <Play
-                width={
-                  size === ScreenSize.Mobile
-                    ? 25
-                    : size === ScreenSize.Tablet
-                    ? 30
-                    : size === ScreenSize.Laptop
-                    ? 40
-                    : size === ScreenSize.Desktop
-                    ? 50
-                    : 35
-                }
-              />
-              <ButtonPlayText>Play</ButtonPlayText>
-            </PlayButton>
-            <InfoButton>
-              <InfoIcon
-                width={
-                  size === ScreenSize.Mobile
-                    ? 19
-                    : size === ScreenSize.Tablet
-                    ? 19
-                    : size === ScreenSize.Laptop
-                    ? 27
-                    : size === ScreenSize.Desktop
-                    ? 35
-                    : 19
-                }
-              />
-              <ButtonInfoText>More Info</ButtonInfoText>
-            </InfoButton>
-          </ButtonsContainer>
-        </InfoContainer>
-      </ImageContainer>
-      <Shadow />
-      <ListsContainer>
-        <ListOfMovies movies={movies} />
-        <ListOfMovies movies={movies} />
-        <ListOfMovies movies={movies} />
-        <ListOfMovies movies={movies} />
-        <ListOfMovies movies={movies} />
-        <ListOfMovies movies={movies} />
-      </ListsContainer>
-    </div>
-  )
+  getRandomMovie() {
+    this.setState({
+      randomMovie:
+        this.state.movies[
+          Math.floor(Math.random() * this.state.movies.length - 1)
+        ],
+    })
+  }
+
+  componentDidMount() {
+    this.getMovies().then(() => this.getRandomMovie())
+  }
+
+  render() {
+    return (
+      <div>
+        <ImageContainer>
+          <Img
+            src={`https://image.tmdb.org/t/p/original${this.state.randomMovie.backdrop_path}`}
+            alt="cover"
+            loading="lazy"
+            onLoad={(ev) => {
+              ev.currentTarget.style.opacity = '1'
+            }}
+          />
+          <InfoContainer>
+            <Title>{this.state.randomMovie.title}</Title>
+            <ButtonsContainer>
+              <PlayButton>
+                <PlayIcon />
+                <ButtonPlayText>Play</ButtonPlayText>
+              </PlayButton>
+              <InfoButton>
+                <InfoIcon />
+                <ButtonInfoText>More Info</ButtonInfoText>
+              </InfoButton>
+            </ButtonsContainer>
+          </InfoContainer>
+        </ImageContainer>
+        <Shadow />
+        <ListsContainer>
+          <ListOfMovies movies={this.state.movies} />
+          <ListOfMovies movies={this.state.movies} />
+          <ListOfMovies movies={this.state.movies} />
+          <ListOfMovies movies={this.state.movies} />
+          <ListOfMovies movies={this.state.movies} />
+          <ListOfMovies movies={this.state.movies} />
+        </ListsContainer>
+      </div>
+    )
+  }
 }
 
 export default Home
