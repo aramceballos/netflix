@@ -313,12 +313,12 @@ class Home extends Component<Props, State> {
         </ImageContainer>
         <Shadow />
         <ListsContainer>
-          <ListOfMovies movies={this.state.movies} />
-          <ListOfMovies movies={this.state.movies} />
-          <ListOfMovies movies={this.state.movies} />
-          <ListOfMovies movies={this.state.movies} />
-          <ListOfMovies movies={this.state.movies} />
-          <ListOfMovies movies={this.state.movies} />
+          <ListOfMovies title="Recommended Movies" movies={this.state.movies} />
+          <ListOfMovies title="Trending Now" movies={this.state.movies} />
+          <ListOfMovies title="Popular on Netflix" movies={this.state.movies} />
+          <ListOfMovies title="Casual Viewing" movies={this.state.movies} />
+          <ListOfMovies title="Sci-Fi Movies" movies={this.state.movies} />
+          <ListOfMovies title="Action & Adventure" movies={this.state.movies} />
         </ListsContainer>
       </div>
     )

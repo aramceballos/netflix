@@ -4,6 +4,7 @@ import MovieInfoModal from '../MovieInfoModal'
 import { Container, ListTitle, Ul, ImageItem } from './styles'
 
 type Props = {
+  title: string
   movies: IMovie[]
 }
 
@@ -60,7 +61,7 @@ class ListOfMovies extends Component<Props, State> {
 
     return (
       <Container>
-        <ListTitle>Discover Movies</ListTitle>
+        <ListTitle>{this.props.title}</ListTitle>
         <Ul>
           {shuffledMovies.map((movie: IMovie) => {
             if (!movie.backdrop_path) {
