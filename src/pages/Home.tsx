@@ -231,6 +231,7 @@ type Props = {}
 type State = {
   movies: IMovie[]
   randomMovie: IMovie
+  loadingMovies: boolean
 }
 
 class Home extends Component<Props, State> {
@@ -254,10 +255,14 @@ class Home extends Component<Props, State> {
         vote_average: 0,
         vote_count: 0,
       },
+      loadingMovies: true,
     }
   }
 
   async getMovies() {
+    this.setState({
+      loadingMovies: true,
+    })
     try {
       const res = await fetch(
         'https://api.themoviedb.org/3/discover/movie?api_key=55b7d17bbf2598297dd0d3af358dca8c'
@@ -266,9 +271,13 @@ class Home extends Component<Props, State> {
 
       this.setState({
         movies: data.results,
+        loadingMovies: false,
       })
     } catch (error) {
       console.error(error)
+      this.setState({
+        loadingMovies: false,
+      })
     }
   }
 
@@ -313,12 +322,36 @@ class Home extends Component<Props, State> {
         </ImageContainer>
         <Shadow />
         <ListsContainer>
-          <ListOfMovies title="Recommended Movies" movies={this.state.movies} />
-          <ListOfMovies title="Trending Now" movies={this.state.movies} />
-          <ListOfMovies title="Popular on Netflix" movies={this.state.movies} />
-          <ListOfMovies title="Casual Viewing" movies={this.state.movies} />
-          <ListOfMovies title="Sci-Fi Movies" movies={this.state.movies} />
-          <ListOfMovies title="Action & Adventure" movies={this.state.movies} />
+          <ListOfMovies
+            loading={this.state.loadingMovies}
+            title="Recommended Movies"
+            movies={this.state.movies}
+          />
+          <ListOfMovies
+            loading={this.state.loadingMovies}
+            title="Trending Now"
+            movies={this.state.movies}
+          />
+          <ListOfMovies
+            loading={this.state.loadingMovies}
+            title="Popular on Netflix"
+            movies={this.state.movies}
+          />
+          <ListOfMovies
+            loading={this.state.loadingMovies}
+            title="Casual Viewing"
+            movies={this.state.movies}
+          />
+          <ListOfMovies
+            loading={this.state.loadingMovies}
+            title="Sci-Fi Movies"
+            movies={this.state.movies}
+          />
+          <ListOfMovies
+            loading={this.state.loadingMovies}
+            title="Action & Adventure"
+            movies={this.state.movies}
+          />
         </ListsContainer>
       </div>
     )
