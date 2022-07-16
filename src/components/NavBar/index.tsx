@@ -20,7 +20,6 @@ import {
   SearchContainer,
   SearchInput,
   CloseIcon,
-  GiftIcon,
   BellIcon,
   ArrowDropDownIcon,
   ProfileIcon,
