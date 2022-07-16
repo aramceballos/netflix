@@ -188,9 +188,6 @@ const NavBar = () => {
           )}
         </NavElement>
         <NavElement>
-          <GiftIcon />
-        </NavElement>
-        <NavElement>
           <BellIcon />
         </NavElement>
         <NavElement hideMargin>
