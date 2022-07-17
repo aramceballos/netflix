@@ -74,7 +74,7 @@ export const Img = styled.img`
 `
 
 export const MenuText = styled.p`
-  font-size: 8px;
+  font-size: 6px;
   margin-left: 20px;
 
   @media screen and (min-width: 768px) {
@@ -259,7 +259,7 @@ export const GiftIcon = styled(Gift)`
 `
 
 export const BellIcon = styled(Bell)`
-  width: 12.5px;
+  width: 24px;
   cursor: pointer;
 
   @media screen and (min-width: 925px) {

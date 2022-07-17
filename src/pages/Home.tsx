@@ -46,7 +46,11 @@ const InfoContainer = styled.div`
 `
 
 const Title = styled.h2`
-  font-size: 28px;
+  font-size: 17px;
+
+  @media screen and (min-width: 375px) {
+    font-size: 22px;
+  }
 
   @media screen and (min-width: 480px) {
     font-size: 38px;
@@ -67,8 +71,8 @@ const PlayButton = styled.button`
   border: none;
   display: flex;
   align-items: center;
-  width: 65px;
-  height: 27px;
+  width: 55px;
+  height: 20px;
   margin-right: 7.5px;
   cursor: pointer;
   color: #000;
@@ -95,8 +99,8 @@ const InfoButton = styled.button`
   border: none;
   display: flex;
   align-items: center;
-  width: 90px;
-  height: 27px;
+  width: 70px;
+  height: 20px;
   margin-right: 5px;
   justify-content: space-evenly;
   padding: 5px;
@@ -119,7 +123,7 @@ const InfoButton = styled.button`
 `
 
 const PlayIcon = styled(Play)`
-  width: 25px;
+  width: 22px;
 
   @media screen and (min-width: 768px) {
     width: 30px;
@@ -137,7 +141,7 @@ const PlayIcon = styled(Play)`
 const InfoIcon = styled(InfoCircle)`
   color: #fff;
   margin-right: 2px;
-  width: 19px;
+  width: 14px;
 
   @media screen and (min-width: 1200px) {
     width: 27px;
@@ -149,7 +153,7 @@ const InfoIcon = styled(InfoCircle)`
 `
 
 const ButtonPlayText = styled.span`
-  font-size: 11px;
+  font-size: 8px;
 
   @media screen and (min-width: 768px) {
     font-size: 13px;
@@ -165,7 +169,7 @@ const ButtonPlayText = styled.span`
 `
 
 const ButtonInfoText = styled.span`
-  font-size: 11px;
+  font-size: 8px;
   color: #fff;
 
   @media screen and (min-width: 768px) {
@@ -213,6 +217,7 @@ const ListsContainer = styled.div`
   }
 
   @media screen and (min-width: 1200px) {
+    top: -80px;
     & > div > * {
       padding-left: 40px;
     }

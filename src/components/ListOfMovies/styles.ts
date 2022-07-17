@@ -39,7 +39,7 @@ export const Ul = styled.ul`
 `
 
 export const ImageItem = styled.img`
-  max-width: 220px;
+  max-width: 146px;
   border-radius: 1px;
   margin-right: 2px;
 

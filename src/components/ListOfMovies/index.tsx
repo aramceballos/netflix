@@ -6,7 +6,7 @@ import MovieInfoModal from '../MovieInfoModal'
 import { Container, ListTitle, Ul, ImageItem } from './styles'
 
 const StyledSkeleton = styled(Skeleton)`
-  width: 220px;
+  width: 146px;
   padding-bottom: 56.25%;
   border-radius: 1px;
   margin-right: 2px;
