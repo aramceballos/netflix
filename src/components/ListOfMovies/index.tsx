@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Skeleton } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
-import MovieInfoModal from '../MovieInfoModal'
 import { Container, ListTitle, Ul, ImageItem } from './styles'
 
 const StyledSkeleton = styled(Skeleton)`
@@ -37,51 +36,19 @@ type Props = {
   title: string
   movies: IMovie[]
   loading: boolean
+  onClick: (movie: IMovie) => void
 }
 
-type State = {
-  isModalOpen: boolean
-  movieInfo: IMovie
-}
-
-class ListOfMovies extends Component<Props, State> {
+class ListOfMovies extends Component<Props> {
   constructor(props: Props) {
     super(props)
-    this.handleClick = this.handleClick.bind(this)
-    this.handleClose = this.handleClose.bind(this)
-
-    this.state = {
-      isModalOpen: false,
-      movieInfo: {
-        adult: false,
-        backdrop_path: '',
-        genre_ids: [],
-        id: 0,
-        original_language: '',
-        original_title: '',
-        overview: '',
-        popularity: 0,
-        poster_path: '',
-        release_date: '',
-        title: '',
-        video: false,
-        vote_average: 0,
-        vote_count: 0,
-      },
-    }
   }
 
-  handleClick(movie: IMovie) {
-    this.setState({
-      isModalOpen: true,
-      movieInfo: movie,
-    })
-  }
-
-  handleClose() {
-    this.setState({
-      isModalOpen: false,
-    })
+  shouldComponentUpdate(nextProps: Props) {
+    return (
+      nextProps.loading !== this.props.loading ||
+      nextProps.movies !== this.props.movies
+    )
   }
 
   render() {
@@ -140,7 +107,7 @@ class ListOfMovies extends Component<Props, State> {
 
               return (
                 <li key={movie.id}>
-                  <div onClick={() => this.handleClick(movie)}>
+                  <div onClick={() => this.props.onClick(movie)}>
                     <ImageItem
                       src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
                       alt={movie.title}
@@ -151,11 +118,6 @@ class ListOfMovies extends Component<Props, State> {
             })
           )}
         </Ul>
-        <MovieInfoModal
-          movie={this.state.movieInfo}
-          open={this.state.isModalOpen}
-          onClose={this.handleClose}
-        />
       </Container>
     )
   }
