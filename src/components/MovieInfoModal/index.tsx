@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Modal from '@mui/material/Modal'
 import Backdrop from '@mui/material/Backdrop'
 import Fade from '@mui/material/Fade'
-import { Play } from '@styled-icons/boxicons-regular'
 
 import {
   Container,
@@ -14,11 +13,14 @@ import {
   Title,
   ButtonsContainer,
   PlayButton,
+  PlayIcon,
   ButtonText,
   Shadow,
   InfoContainer,
+  Column,
   InfoText,
-  LeftContent,
+  Label,
+  InfoTextList,
 } from './styles'
 
 type Props = {
@@ -32,6 +34,23 @@ class MovieInfoModal extends Component<Props> {
     super(props)
   }
 
+  getGenres(): string[] {
+    const retGenres = []
+    const movieGenres = this.props.movie.genre_ids
+    const genresList = JSON.parse(
+      window.localStorage.getItem('genres') as string
+    )
+    for (let i = 0; i < movieGenres.length; i++) {
+      const genre = genresList.find(
+        (g: { id: number; name: string }) => g.id === movieGenres[i]
+      )
+      if (genre) {
+        retGenres.push(genre.name)
+      }
+    }
+    return retGenres
+  }
+
   render() {
     return (
       <Modal
@@ -40,6 +59,11 @@ class MovieInfoModal extends Component<Props> {
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{ timeout: 500 }}
+        sx={{
+          overflowY: 'scroll',
+          display: 'flex',
+          justifyContent: 'center',
+        }}
       >
         <Fade in={this.props.open}>
           <Container>
@@ -56,7 +80,7 @@ class MovieInfoModal extends Component<Props> {
                 <Title>{this.props.movie.title}</Title>
                 <ButtonsContainer>
                   <PlayButton>
-                    <Play width={20} />
+                    <PlayIcon />
                     <ButtonText>Play</ButtonText>
                   </PlayButton>
                 </ButtonsContainer>
@@ -64,12 +88,21 @@ class MovieInfoModal extends Component<Props> {
             </ImageContainer>
             <Shadow />
             <InfoContainer>
-              <LeftContent>
-                <InfoText>
-                  {this.props.movie.release_date.split('-')[0]}
-                </InfoText>
-                <InfoText>{this.props.movie.overview}</InfoText>
-              </LeftContent>
+              <Column>
+                <p>{this.props.movie.release_date.split('-')[0]}</p>
+                <InfoText>{this.props.movie.overview.split('.')[0]}.</InfoText>
+              </Column>
+              <Column>
+                <Label>Genres:</Label>
+                <InfoTextList>
+                  {this.getGenres().map((genre: string, index: number) => (
+                    <>
+                      <span key={index}>{genre}</span>
+                      <br />
+                    </>
+                  ))}
+                </InfoTextList>
+              </Column>
             </InfoContainer>
           </Container>
         </Fade>

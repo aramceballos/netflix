@@ -354,7 +354,7 @@ class Home extends Component<Props, State> {
                 <PlayIcon />
                 <ButtonPlayText>Play</ButtonPlayText>
               </PlayButton>
-              <InfoButton>
+              <InfoButton onClick={() => this.handleClick(this.state.randomMovie)}>
                 <InfoIcon />
                 <ButtonInfoText>More Info</ButtonInfoText>
               </InfoButton>
