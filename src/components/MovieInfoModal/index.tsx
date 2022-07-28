@@ -95,12 +95,17 @@ class MovieInfoModal extends Component<Props> {
               <Column>
                 <Label>Genres:</Label>
                 <InfoTextList>
-                  {this.getGenres().map((genre: string, index: number) => (
-                    <>
-                      <span key={index}>{genre}</span>
-                      <br />
-                    </>
-                  ))}
+                  {this.getGenres().map(
+                    (genre: string, index: number, arr: string[]) => (
+                      <div key={index}>
+                        <span>
+                          {genre}
+                          {index !== arr.length - 1 && ','}
+                        </span>
+                        <br />
+                      </div>
+                    )
+                  )}
                 </InfoTextList>
               </Column>
             </InfoContainer>
