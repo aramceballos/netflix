@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { Play, InfoCircle } from '@styled-icons/boxicons-regular'
+
+import Layout from '../components/Layout'
 import ListOfMovies from '../components/ListOfMovies'
 import MovieInfoModal from '../components/MovieInfoModal'
 
@@ -337,75 +340,81 @@ class Home extends Component<Props, State> {
 
   render() {
     return (
-      <div>
-        <ImageContainer>
-          <Img
-            src={`https://image.tmdb.org/t/p/original${this.state.randomMovie.backdrop_path}`}
-            alt="cover"
-            loading="lazy"
-            onLoad={(ev) => {
-              ev.currentTarget.style.opacity = '1'
-            }}
+      <Layout>
+        <>
+          <ImageContainer>
+            <Img
+              src={`https://image.tmdb.org/t/p/original${this.state.randomMovie.backdrop_path}`}
+              alt="cover"
+              loading="lazy"
+              onLoad={(ev) => {
+                ev.currentTarget.style.opacity = '1'
+              }}
+            />
+            <InfoContainer>
+              <Title>{this.state.randomMovie.title}</Title>
+              <ButtonsContainer>
+                <Link to="/watch">
+                  <PlayButton>
+                    <PlayIcon />
+                    <ButtonPlayText>Play</ButtonPlayText>
+                  </PlayButton>
+                </Link>
+                <InfoButton
+                  onClick={() => this.handleClick(this.state.randomMovie)}
+                >
+                  <InfoIcon />
+                  <ButtonInfoText>More Info</ButtonInfoText>
+                </InfoButton>
+              </ButtonsContainer>
+            </InfoContainer>
+          </ImageContainer>
+          <Shadow />
+          <ListsContainer>
+            <ListOfMovies
+              loading={this.state.loadingMovies}
+              title="Recommended Movies"
+              movies={this.state.movies}
+              onClick={this.handleClick}
+            />
+            <ListOfMovies
+              loading={this.state.loadingMovies}
+              title="Trending Now"
+              movies={this.state.movies}
+              onClick={this.handleClick}
+            />
+            <ListOfMovies
+              loading={this.state.loadingMovies}
+              title="Popular on Netflix"
+              movies={this.state.movies}
+              onClick={this.handleClick}
+            />
+            <ListOfMovies
+              loading={this.state.loadingMovies}
+              title="Casual Viewing"
+              movies={this.state.movies}
+              onClick={this.handleClick}
+            />
+            <ListOfMovies
+              loading={this.state.loadingMovies}
+              title="Sci-Fi Movies"
+              movies={this.state.movies}
+              onClick={this.handleClick}
+            />
+            <ListOfMovies
+              loading={this.state.loadingMovies}
+              title="Action & Adventure"
+              movies={this.state.movies}
+              onClick={this.handleClick}
+            />
+          </ListsContainer>
+          <MovieInfoModal
+            movie={this.state.movieInfo}
+            open={this.state.isModalOpen}
+            onClose={this.handleClose}
           />
-          <InfoContainer>
-            <Title>{this.state.randomMovie.title}</Title>
-            <ButtonsContainer>
-              <PlayButton>
-                <PlayIcon />
-                <ButtonPlayText>Play</ButtonPlayText>
-              </PlayButton>
-              <InfoButton onClick={() => this.handleClick(this.state.randomMovie)}>
-                <InfoIcon />
-                <ButtonInfoText>More Info</ButtonInfoText>
-              </InfoButton>
-            </ButtonsContainer>
-          </InfoContainer>
-        </ImageContainer>
-        <Shadow />
-        <ListsContainer>
-          <ListOfMovies
-            loading={this.state.loadingMovies}
-            title="Recommended Movies"
-            movies={this.state.movies}
-            onClick={this.handleClick}
-          />
-          <ListOfMovies
-            loading={this.state.loadingMovies}
-            title="Trending Now"
-            movies={this.state.movies}
-            onClick={this.handleClick}
-          />
-          <ListOfMovies
-            loading={this.state.loadingMovies}
-            title="Popular on Netflix"
-            movies={this.state.movies}
-            onClick={this.handleClick}
-          />
-          <ListOfMovies
-            loading={this.state.loadingMovies}
-            title="Casual Viewing"
-            movies={this.state.movies}
-            onClick={this.handleClick}
-          />
-          <ListOfMovies
-            loading={this.state.loadingMovies}
-            title="Sci-Fi Movies"
-            movies={this.state.movies}
-            onClick={this.handleClick}
-          />
-          <ListOfMovies
-            loading={this.state.loadingMovies}
-            title="Action & Adventure"
-            movies={this.state.movies}
-            onClick={this.handleClick}
-          />
-        </ListsContainer>
-        <MovieInfoModal
-          movie={this.state.movieInfo}
-          open={this.state.isModalOpen}
-          onClose={this.handleClose}
-        />
-      </div>
+        </>
+      </Layout>
     )
   }
 }
